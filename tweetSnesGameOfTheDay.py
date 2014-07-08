@@ -20,7 +20,11 @@ def getWiki(str):
     response = urllib2.urlopen(url)
     res = json.load(response)
     print(res)
-    if not res[1]:
+    try:
+        if not res[1]:
+            return(None)
+    except KeyError as e:
+        print(e)
         return(None)
     else:
         res = "_".join(res[1][0].split(" "))
@@ -40,10 +44,17 @@ def main():
        url = getWiki("%20".join(game.split(" ")))
        if url is not None:
            tweet += url
-       if len(tweet) < 140:
+       tagged = tweet + " #"+"".join(game.split(" "))+" "
+       if len(tagged) <= 140:
+           ok = True
+           api.update_status(status=tagged)
+           print("SNES game tweeted: " + tagged)
+       elif len(tweet)<=140:
            ok = True
            api.update_status(status=tweet)
            print("SNES game tweeted: " + tweet)
 
 if __name__== "__main__":
     main()
+
+#http://openweathermap.org/weather-conditions
