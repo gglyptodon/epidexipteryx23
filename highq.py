@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from twython import Twython
 import urllib2
 
-def grabNews(outfile):
+def grabNews():
     resp = urllib2.urlopen("http://heise.de/index.html").read()
     return(resp)
 
@@ -36,11 +36,7 @@ def getHaikuLine(num, syldct):
 def main():
     pyphen.language_fallback('en_EN')
     d = pyphen.Pyphen(lang='de_DE')
-    res = d.inserted('internet')
-    index = "./index.html"
-    markup = grabNews(index)
-    #with open(index,'r') as m:
-    #    markup = m.read()
+    markup = grabNews()
     bs = BeautifulSoup(markup, "html.parser")
     resources = bs.find_all('h2')
     resclean = []
@@ -66,12 +62,9 @@ def main():
             syll[l].append(tmp)
         except KeyError as k:
             syll[l] = [tmp]
-    #haiku = False
-    #while haiku is False:
     lineOne = getHaikuLine(5, syll)
     lineTwo = getHaikuLine(7, syll)
     lineThree = getHaikuLine(5,syll)
-    #haiku = True
 
     tweet = "".join([lineOne,lineTwo,lineThree])
     
