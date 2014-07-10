@@ -3,9 +3,11 @@ import random
 import pickle 
 from bs4 import BeautifulSoup
 from twython import Twython
-import json
 import urllib2
 
+def grabNews(outfile):
+    resp = urllib2.urlopen("http://heise.de/index.html").read()
+    return(resp)
 
 def getHaikuLine(num, syldct):
     #qnd
@@ -35,8 +37,10 @@ def main():
     pyphen.language_fallback('en_EN')
     d = pyphen.Pyphen(lang='de_DE')
     res = d.inserted('internet')
-    with open("index.html",'r') as m:
-        markup = m.read()
+    index = "./index.html"
+    markup = grabNews(index)
+    #with open(index,'r') as m:
+    #    markup = m.read()
     bs = BeautifulSoup(markup, "html.parser")
     resources = bs.find_all('h2')
     resclean = []
@@ -62,12 +66,12 @@ def main():
             syll[l].append(tmp)
         except KeyError as k:
             syll[l] = [tmp]
-    haiku = False
-    while haiku is False:
-        lineOne = getHaikuLine(5, syll)
-        lineTwo = getHaikuLine(7, syll)
-        lineThree = getHaikuLine(5,syll)
-        haiku = True
+    #haiku = False
+    #while haiku is False:
+    lineOne = getHaikuLine(5, syll)
+    lineTwo = getHaikuLine(7, syll)
+    lineThree = getHaikuLine(5,syll)
+    #haiku = True
 
     tweet = "".join([lineOne,lineTwo,lineThree])
     
@@ -77,7 +81,7 @@ def main():
     while (ok == False):
        if len(tweet) <= 140:
            ok = True
-           api.update_status(status=tweet)
+           #api.update_status(status=tweet)
            print("tweet: " + tweet)
 
 
