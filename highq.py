@@ -1,6 +1,6 @@
 import pyphen
 import random
-import pickle 
+import pickle
 from bs4 import BeautifulSoup
 from twython import Twython
 import urllib2
@@ -51,7 +51,7 @@ def main():
     resclean = []
     for t in tmp:
         resclean +=t
-    
+
     for r in resclean:
         r = r.strip()
         tmp = d.inserted(r)
@@ -67,15 +67,12 @@ def main():
     lineThree = getHaikuLine(5,syll)
 
     tweet = "".join([lineOne,lineTwo,lineThree])
-    
+
     crd = pickle.load(open("crd.nope",'r'))
     api = Twython(crd["apiKey"],crd["apiSecret"],crd["accessToken"],crd["accessTokenSecret"])
-    ok = False
-    while (ok == False):
-       if len(tweet) <= 140:
-           ok = True
-           #api.update_status(status=tweet)
-           print("tweet: " + tweet)
+    if len(tweet) <= 140:
+        #api.update_status(status=tweet)
+        print("tweet: " + tweet)
 
 
 if __name__ == "__main__":
