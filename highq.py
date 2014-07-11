@@ -34,7 +34,7 @@ def getHaikuLine(num, syldct):
 
 
 def main():
-    pyphen.language_fallback('en_EN')
+    pyphen.language_fallback('en_US')
     d = pyphen.Pyphen(lang='de_DE')
     markup = grabNews()
     bs = BeautifulSoup(markup, "html.parser")
