@@ -33,16 +33,19 @@ class MarkovChain(object):
         res =""
         t = random.choice(self.chain.keys())
         for i in range(0,maxItems):
-            print(self.chain[t])
-            tmp = random.choice(self.chain[t])
-            res += " "+tmp
-            t= tmp
+            try:
+                print(self.chain[t])
+                tmp = random.choice(self.chain[t])
+                res += " "+tmp
+                t= tmp
+            except KeyError as e:
+                return(res)
         return(res)
 
 
 def main():
     mc = MarkovChain(corpus = open(sys.argv[1],'r').read(), separator = " ")
-    print(mc.chain)
-    print(mc.printSth())
+    #print(mc.chain)
+    print(mc.printSth(int(sys.argv[2])))
 if __name__ == "__main__":
     main()
