@@ -3,7 +3,8 @@ import sys
 import urllib2
 from bs4 import BeautifulSoup
 import re
-
+from twython import Twython
+import pickle
 class MarkovChain(object):
     def __init__(self, separator = None, corpus = None):
         self.separator = separator
@@ -69,7 +70,10 @@ def main():
     print(mc.chain)
     tweet = (mc.printSth(5))
     #print(tweet)
-    tweet += "\n#markovchain"
+    tweet += "\n#markovchain generated"
     print(tweet)
+    crd = pickle.load(open("crd.nope",'r'))
+    api = Twython(crd["apiKey"],crd["apiSecret"],crd["accessToken"],crd["accessTokenSecret"])
+    #api.update_status(status = tweet)
 if __name__ == "__main__":
     main()
