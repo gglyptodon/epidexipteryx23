@@ -47,7 +47,7 @@ def main():
 
     #5,7,5
     syll = {}
-    tmp = [r.split( ) for r in resclean]
+    tmp = [r.split() for r in resclean]
     resclean = []
     for t in tmp:
         resclean +=t
@@ -57,6 +57,8 @@ def main():
         tmp = d.inserted(r)
         if tmp.startswith("-"):
             tmp = tmp[1:]
+        if tmp.endswith("-"):
+            tmp = tmp[:-1]
         l = (len(tmp.split("-")))
         try:
             syll[l].append(tmp)
