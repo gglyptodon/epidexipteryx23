@@ -57,4 +57,3 @@ def main():
 if __name__== "__main__":
     main()
 
-#http://openweathermap.org/weather-conditions
